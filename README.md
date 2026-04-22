@@ -14,6 +14,10 @@ Dieses Projekt ist ein lokales Multi-Container-System mit Docker Compose.
 
 Browser → nginx → backend → postgres
 
+## Trigger CI
+
+TEST
+
 ## Start
 
 ```bash
