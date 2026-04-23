@@ -55,8 +55,18 @@ jobs:
       - name: Wait for services
         run: sleep 25
 
-      - name: Test API endpoint
+      - name: Test GET /api/users
         run: curl --fail http://localhost:8080/api/users
+
+      - name: Test POST /api/users
+        run: |
+          curl --fail -X POST http://localhost:8080/api/users \
+            -H "Content-Type: application/json" \
+            -d '{"name":"CI_User"}'
+
+      - name: Verify created user exists
+        run: |
+          curl --fail http://localhost:8080/api/users | grep "CI_User"
 
       - name: Show logs on failure
         if: failure()
