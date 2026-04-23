@@ -40,3 +40,25 @@ jobs:
 
       - name: Build backend image
         run: docker build -t test-backend ./backend
+
+  integration-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Start containers
+        working-directory: docker-website
+        run: docker compose up --build -d
+
+      - name: Wait for services
+        run: sleep 15
+
+      - name: Test API endpoint
+        run: curl --fail http://localhost:8080/api/users
+
+      - name: Show logs on failure
+        if: failure()
+        working-directory: docker-website
+        run: docker compose logs
