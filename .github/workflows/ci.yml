@@ -1,5 +1,8 @@
 name: CI
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches: [ "main" ]
@@ -52,7 +55,7 @@ jobs:
         working-directory: docker-website
         run: docker compose up --build -d
 
-      - name: Wait for backend to become healthy
+      - name: Wait for backend to become ready
         run: |
           for i in {1..30}; do
             if curl -f http://localhost:8080/api/users; then
