@@ -40,6 +40,10 @@ def init_db():
 def hello():
     return "API läuft"
 
+@app.route("/health", methods=["GET"])
+def health():
+    return {"status": "ok"}, 200
+
 @app.route("/users", methods=["GET"])
 def get_users():
     conn = get_db_connection()
