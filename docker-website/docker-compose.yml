@@ -14,6 +14,11 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-devdb}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-devuser} -d ${POSTGRES_DB:-devdb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   backend:
     build: ../backend
@@ -26,6 +31,11 @@ services:
       DB_NAME: ${DB_NAME:-devdb}
       DB_USER: ${DB_USER:-devuser}
       DB_PASSWORD: ${DB_PASSWORD:-devpass}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000/users || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 volumes:
   postgres_data:
