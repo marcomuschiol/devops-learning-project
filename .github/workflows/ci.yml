@@ -53,7 +53,7 @@ jobs:
         run: docker compose up --build -d
 
       - name: Wait for services
-        run: sleep 15
+        run: sleep 25
 
       - name: Test API endpoint
         run: curl --fail http://localhost:8080/api/users
